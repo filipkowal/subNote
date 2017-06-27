@@ -7,3 +7,12 @@ textarea.form-control {
     resize: none;
     height: 74px;
 }
+.avatar {
+    height: 50px;
+    width: 50px;
+    margin-left: 10px;
+
+}.user {
+     right: 0px;
+     position: absolute;
+ }

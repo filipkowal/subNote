@@ -1,7 +1,13 @@
 var app = angular.module("subNote", []);
-app.controller("mainCtrl", function($scope, noteService, $rootScope, $interval) {
+
+app.controller("mainCtrl", function($scope, noteService, $rootScope, $interval, $http) {
     init = function () {
         $rootScope.$broadcast('restorestate');
+
+        console.log('yo');
+        $http.get('https://api.github.com/users/filipkowal').then(function(response){
+            $scope.user = response.data;
+        });
     };
     init();
     $scope.sheets = noteService.sheets;
