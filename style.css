@@ -1,0 +1,9 @@
+textarea.form-control {
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0px;
+    box-shadow: none;
+    resize: none;
+    height: 74px;
+}
