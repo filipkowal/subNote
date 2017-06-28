@@ -1,14 +1,61 @@
-var app = angular.module("subNote", []);
+var app = angular.module('subNote', []);
 
-app.controller("mainCtrl", function($scope, noteService, $rootScope, $interval, $http) {
+app.controller('mainCtrl', ['$scope',
+    'noteService',
+    '$rootScope',
+    '$interval',
+    '$http',
+    function($scope,
+             noteService,
+             $rootScope,
+             $interval,
+             $http) {
     (function init () {
-        $rootScope.$broadcast('restorestate');
+        // $rootScope.$broadcast('restorestate');
+        $scope.sheets = noteService.sheets;
+        // $scope.sheets = {
+        //     sheets: {
+        //         notes: [
+        //             {
+        //                 text: 'pies\nczupiradło',
+        //                 title: null,
+        //                 color: 'blue',
+        //                 id: 0.4,
+        //                 showSubNotes: true,
+        //                 subNotes: [
+        //                     {title: 'mięso', text: 'mieso', id: 0.3, parentId: 0.4}
+        //                 ]
+        //             }
+        //         ]
+        //     }};
+        //
+        // $scope.notes = [
+        //     {
+        //         text: 'pies\nczupiradło',
+        //         title: null,
+        //         color: 'blue',
+        //         id: 0.4,
+        //         showSubNotes: true,
+        //         subNotes: [
+        //             {title: 'mięso', text: 'mieso', id: 0.3, parentId: 0.4}
+        //         ]
+        //     }
+        // ];
+        console.log('$scope.sheets', $scope.sheets);
+
         $http.get('https://api.github.com/users/filipkowal').then(function(response){
             $scope.user = response.data;
         });
     })();
 
-    $scope.sheets = noteService.sheets;
+    $scope.moreThenOneNote = function () {
+        return $scope.sheets.notes.length -1;
+    };
+
+    $scope.toggleShowSubNotes = function (note) {
+        note.showSubNotes = !note.showSubNotes;
+    };
+
     $scope.deleteNote = function (note) {
         if($scope.moreThenOneNote) {
             $scope.sheets.notes = $scope.sheets.notes.filter(function(elem) {
@@ -17,12 +64,14 @@ app.controller("mainCtrl", function($scope, noteService, $rootScope, $interval, 
         }
         $rootScope.$broadcast('savestate');
     };
+
     $scope.deleteSubNote = function (note, subnote) {
         note.subNotes = note.subNotes.filter(function(elem){
             return subnote.id !== elem.id;
         });
         $rootScope.$broadcast('savestate');
     };
+
     $scope.newSubNote = function(note) {
         note.subNotes.push({
             text: '',
@@ -31,22 +80,13 @@ app.controller("mainCtrl", function($scope, noteService, $rootScope, $interval, 
             parentId: note.id
         });
         $rootScope.$broadcast('savestate');
-
     };
-    $scope.moreThenOneNote = function () {
-        return $scope.sheets.notes.length -1;
-    };
-    $scope.view = {name: 'notes'};
 
     $scope.$watch('sheets', function() {
-        console.log('savestate');
+        console.log('change in sheets');
         $rootScope.$broadcast('savestate');
     }, true);
-    //
-    $scope.toggleShowSubNotes = function (note) {
-        note.showSubNotes = !note.showSubNotes;
-    }
-});
+}]);
 app.directive('watchNote', function($timeout) {
     return {
         restrict: 'A',
@@ -118,10 +158,12 @@ app.factory('noteService', ['$rootScope', function ($rootScope) {
         },
 
         SaveState: function () {
+            console.log('save');
             localStorage.noteService = JSON.stringify(service.sheets);
         },
 
         RestoreState: function () {
+            console.log('restore');
             service.sheets = JSON.parse(localStorage.noteService);
         }
     };

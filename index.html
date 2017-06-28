@@ -11,24 +11,7 @@
 </head>
 <body ng-app="subNote">
 <main ng-controller="mainCtrl">
-    <!--<div class="row">-->
-        <!--<div class="col-md-12">-->
-            <!--<form name="myForm">-->
-                <!--<label>-->
-                    <!--<input type="radio" ng-model="view.name" value="notes">-->
-                    <!--Notes-->
-                <!--</label>-->
-                <!--<label>-->
-                    <!--<input type="radio" ng-model="view.name" value="todos">-->
-                    <!--Todo-->
-                <!--</label>-->
-                <!--<label>-->
-                    <!--<input type="radio" ng-model="view.name" value="done">-->
-                    <!--Done-->
-                <!--</label>-->
-            <!--</form>-->
-        <!--</div>-->
-    <!--</div>-->
+
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -41,9 +24,10 @@
         </div>
     </nav>
 
-    <div class="row" ng-if="view.name==='notes'">
+    <div class="row">
         <div class="col-md-12">
             <div ng-repeat="note in sheets.notes">
+                <p>notatka</p>
                 <div class="row">
                     <div class="col-md-10">
                         <textarea type="text" ng-model="note.text" ng-trim="false" class="form-control" rows="1" id="{{note.id}}" autofocus="true" watch-note></textarea>
@@ -82,59 +66,6 @@
             </div>
         </div>
     </div>
-
-
-
-    <!--<div class="row" ng-if="view.name==='todos'">-->
-        <!--<div class="col-md-12">-->
-            <!--<div ng-repeat="todo in sheets.todos" class="row">-->
-                <!--<div class="col-md-1">-->
-                    <!--<input type="checkbox" ng-click="done(todo)" id="{{todo}}">{{todo.todoVal}}-->
-                <!--</div>-->
-                <!--<div class="col-md-9">-->
-                    <!--<input ng-model="todo.text" ng-trim="false" class="form-control" id="{{todo.id}}" autofocus="true">-->
-                <!--</div>-->
-                <!--<div class="col-md-2">-->
-                    <!--<button class="btn btn-danger" ng-click="deleteTodo(todo)"><i class="fa fa-times" aria-hidden="true"></i>-->
-                    <!--</button>-->
-                <!--</div>-->
-                <!--<div class="col-md-12">-->
-                    <!--<div class="row">-->
-                        <!--<div class="col-md-1"></div>-->
-                        <!--<div ng-repeat="subTodo in todo.subTodo" class="col-md-9">-->
-                            <!--<textarea type="text" ng-model="subTodo.text" ng-trim="false" class="form-control" rows="1" id="{{subTodo.id}}" autofocus="true"></textarea>-->
-                        <!--</div>-->
-                        <!--<div class="col-md-2"><button class="btn btn-danger" ng-click="deleteSubTodo(subTodo)"><i class="fa fa-times" aria-hidden="true"></i>-->
-                        <!--</button></div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-
-            <!--<div class="row">-->
-                <!--<div class="col-md-11">-->
-                    <!--<input class="form-control col-md-11" type="text" ng-model="newT">-->
-                <!--</div>-->
-                <!--<div class="col-md-1">-->
-                    <!--<button class="btn btn-success" type="submit" ng-click="newTodo(newT)">Add</button>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-
-
-    <!--<div class="row" ng-if="view.name==='done'">-->
-        <!--<div class="col-md-12">-->
-            <!--<div ng-repeat="doneTodo in sheets.done">-->
-                <!--<input type="checkbox" ng-click="unDone(todo)" id="{{doneTodo}}" checked>-->
-                <!--<p>{{doneTodo.text}}</p>-->
-            <!--</div>-->
-            <!--<button class="btn btn-danger">Clear done todos</button>-->
-        <!--</div>-->
-    <!--</div>-->
-
-
-
-
 
 </main>
 </body>
