@@ -1,0 +1,32 @@
+User manual
+
+subNote is a notetaking application to write down ideas or things to remember.
+
+
+1. Creating a new note:
+  As paragraphs are treated as separate notes, creating a new note is as simple as starting a new paragraphs. 
+  Click enter 2 times when inside a note and new note is created.
+  
+  
+2. Editing a note:
+  Every note is directly seen from the main view. Just click on the textarea of the note and change the text.
+  
+  
+3. Deleting a note:
+  Click red 'x' button on the right of note's textarea to delete a note.
+  
+  
+4. Saving notes:
+  Notes are automatically saved on every change of their content.
+  
+  
+4. Creating a sub-note:
+  Click green '+' button on the right of note's textarea to create new sub-note.
+  
+  
+5. Showing/hiding sub-notes:
+  Click blue triangle button on the right of note's textarea to show or hide note's sub-notes.
+  
+  
+6. Editing and deleting sub-notes:
+  Analogically to editing and deleting notes (see 2. and 3. accordingly).
