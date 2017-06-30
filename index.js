@@ -11,37 +11,8 @@ app.controller('mainCtrl', ['$scope',
              $interval,
              $http) {
     (function init () {
-        // $rootScope.$broadcast('restorestate');
+        $rootScope.$broadcast('restorestate');
         $scope.sheets = noteService.sheets;
-        // $scope.sheets = {
-        //     sheets: {
-        //         notes: [
-        //             {
-        //                 text: 'pies\nczupiradło',
-        //                 title: null,
-        //                 color: 'blue',
-        //                 id: 0.4,
-        //                 showSubNotes: true,
-        //                 subNotes: [
-        //                     {title: 'mięso', text: 'mieso', id: 0.3, parentId: 0.4}
-        //                 ]
-        //             }
-        //         ]
-        //     }};
-        //
-        // $scope.notes = [
-        //     {
-        //         text: 'pies\nczupiradło',
-        //         title: null,
-        //         color: 'blue',
-        //         id: 0.4,
-        //         showSubNotes: true,
-        //         subNotes: [
-        //             {title: 'mięso', text: 'mieso', id: 0.3, parentId: 0.4}
-        //         ]
-        //     }
-        // ];
-        console.log('$scope.sheets', $scope.sheets);
 
         $http.get('https://api.github.com/users/filipkowal').then(function(response){
             $scope.user = response.data;
@@ -58,18 +29,23 @@ app.controller('mainCtrl', ['$scope',
 
     $scope.deleteNote = function (note) {
         if($scope.moreThenOneNote) {
-            $scope.sheets.notes = $scope.sheets.notes.filter(function(elem) {
-                return note.id !== elem.id;
-            })
+            var txt;
+            if (window.confirm("Do you want to delete this note?")) {
+                $scope.sheets.notes = $scope.sheets.notes.filter(function(elem) {
+                    return note.id !== elem.id;
+                })
+            }
         }
         $rootScope.$broadcast('savestate');
     };
 
     $scope.deleteSubNote = function (note, subnote) {
-        note.subNotes = note.subNotes.filter(function(elem){
-            return subnote.id !== elem.id;
-        });
-        $rootScope.$broadcast('savestate');
+        if (window.confirm("Do you want to delete this note?")) {
+            note.subNotes = note.subNotes.filter(function(elem){
+                return subnote.id !== elem.id;
+            });
+            $rootScope.$broadcast('savestate');
+        }
     };
 
     $scope.newSubNote = function(note) {
@@ -83,7 +59,6 @@ app.controller('mainCtrl', ['$scope',
     };
 
     $scope.$watch('sheets', function() {
-        console.log('change in sheets');
         $rootScope.$broadcast('savestate');
     }, true);
 }]);
@@ -93,7 +68,6 @@ app.directive('watchNote', function($timeout) {
         link: function ($scope, element, attrs) {
             $scope.initialHeight = $scope.initialHeight || element[0].style.height;
 
-            // element.on("input change", watchNote());
             $timeout(resize, 0);
 
             $scope.$watch(attrs.ngModel, function(newVal, oldVal) {
@@ -158,12 +132,10 @@ app.factory('noteService', ['$rootScope', function ($rootScope) {
         },
 
         SaveState: function () {
-            console.log('save');
             localStorage.noteService = JSON.stringify(service.sheets);
         },
 
         RestoreState: function () {
-            console.log('restore');
             service.sheets = JSON.parse(localStorage.noteService);
         }
     };
